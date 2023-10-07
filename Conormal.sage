@@ -126,18 +126,16 @@ def biflat_poset(M):
 
 def check_biflag(c, M):
     r"""
-    Return if a tuple `c` of biflats is a biflag of `M`.
+    Return if a chain `c` of biflats is a biflag of `M`.
 
-    A tuple of biflats `c` of biflats is a biflag if `c` forms a chain
-    in the poset of biflats of `M` and `c` satisfies a "gap" condition.
-    See Definition 2.14 of Ardila, Denham and Huh's 
-    "Lagrangian Geometry of Matroids".
+    A chain of biflats `c` of biflats is a biflag if  `c` 
+    satisfies a "gap" condition. See Definition 2.14 of Ardila, 
+    Denham and Huh's "Lagrangian Geometry of Matroids".
     
     .. WARNING::
 
-    This code checks if `c` is a bichain using the passed in order.
-    If `c` forms a bichain undering a non-trivial permutation of its
-    elements, this code will still return `False`.
+    This code assumes `c` is a chain in the poset of biflats.
+    No checking of pairwise compatibility happens.
 
     INPUT:
     
@@ -168,11 +166,6 @@ def check_biflag(c, M):
     sage: check_biflag(P.chains()[8],M)
     True
     """
-    
-    #Check if c forms a chain in the poset of biflats.
-    for i in range(0,len(c)-1):
-        if not biflat_comparison(c[i],c[i+1]):
-            return False
         
     #Compute the union of the intersections of the biflats of c
     UofI = set().union(*[x[0].intersection(x[1]) for x in c])
